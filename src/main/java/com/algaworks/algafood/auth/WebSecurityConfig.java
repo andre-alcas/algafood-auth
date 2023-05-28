@@ -26,21 +26,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.roles("ADMIN");
 	}
 	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		// http.httpBasic().and().formLogin(); //padrao ter formLogin
-		http.httpBasic()
-		.and()
-		.authorizeRequests()
-			.antMatchers("/v1/cozinhas/**").permitAll()
-			.anyRequest().authenticated()
-		.and()
-			.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-			.csrf().disable();
-	}
-	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
