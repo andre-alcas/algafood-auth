@@ -32,7 +32,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret(passwordEncoder.encode("web123"))
 				.authorizedGrantTypes("password","refresh_token")
 				.scopes("write", "read")
-				.accessTokenValiditySeconds(60 * 60 * 6) // 6 horas (padrão é 12 horas)
+				.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas)
+				.refreshTokenValiditySeconds(10 * 24 * 60 * 60)//10 dias, padrao é 30 dias
 			.and()	
 				.withClient("checktoken")
 					.secret(passwordEncoder.encode("check123"));
@@ -40,7 +41,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.authenticationManager(authenticationManager).userDetailsService(userDetailsService);
+		endpoints
+		.authenticationManager(authenticationManager)
+		.userDetailsService(userDetailsService);
+		//.reuseRefreshTokens(false);
 	}
 	
 	@Override
