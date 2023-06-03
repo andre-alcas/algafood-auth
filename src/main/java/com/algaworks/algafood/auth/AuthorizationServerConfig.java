@@ -34,16 +34,24 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.scopes("write", "read")
 				.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas)
 				.refreshTokenValiditySeconds(10 * 24 * 60 * 60)//10 dias, padrao é 30 dias
-			.and()
-			.withClient("faturamento")
-			.secret(passwordEncoder.encode("faturamento123"))
-			.authorizedGrantTypes("client_credentials")
-			.scopes("read")
-			.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas)
-			 
-			.and()	
-				.withClient("checktoken")//apenas pro resource server fazer a chamada da uri com introspecção
-				.secret(passwordEncoder.encode("check123"));
+				
+				.and()
+					.withClient("foodanalytics")
+					.secret(passwordEncoder.encode("food123"))
+					.authorizedGrantTypes("authorization_code")
+					.scopes("write", "read")
+					.redirectUris("http://localhost:5501","http://exemplo2-aplicacao-cliente")
+				
+				.and()
+					.withClient("faturamento")
+					.secret(passwordEncoder.encode("faturamento123"))
+					.authorizedGrantTypes("client_credentials")
+					.scopes("read")
+					.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas)
+				 
+				.and()	
+					.withClient("checktoken")//apenas pro resource server fazer a chamada da uri com introspecção
+					.secret(passwordEncoder.encode("check123"));
 	}
 	
 	@Override
