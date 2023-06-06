@@ -49,6 +49,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 					.scopes("read")
 					.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas)
 				 
+				.and()
+				.withClient("webadmin")
+				.authorizedGrantTypes("implicit")
+				.scopes("write", "read")
+				.redirectUris("http://exemplo-aplicacao-cliente")
+					
 				.and()	
 					.withClient("checktoken")//apenas pro resource server fazer a chamada da uri com introspecção
 					.secret(passwordEncoder.encode("check123"));
