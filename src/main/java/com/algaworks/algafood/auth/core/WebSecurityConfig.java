@@ -1,4 +1,4 @@
-package com.algaworks.algafood.auth;
+package com.algaworks.algafood.auth.core;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,17 +16,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("alcas")
-			.password(passwordEncoder().encode("123456"))
-			.roles("ADMIN")
-		.and()
-			.withUser("kratos")
-			.password(passwordEncoder().encode("654321"))
-			.roles("ADMIN");
-	}
+	
+	
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.inMemoryAuthentication()
+//			.withUser("alcas")
+//			.password(passwordEncoder().encode("123456"))
+//			.roles("ADMIN")
+//		.and()
+//			.withUser("kratos")
+//			.password(passwordEncoder().encode("654321"))
+//			.roles("ADMIN");
+//	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -39,10 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManager();
 	}
 	
-	@Bean
-	@Override
-	public UserDetailsService userDetailsService() {
-		return super.userDetailsService();
-	}
+//	@Bean
+//	@Override
+//	public UserDetailsService userDetailsService() {
+//		return super.userDetailsService();
+//	}
 
 }
