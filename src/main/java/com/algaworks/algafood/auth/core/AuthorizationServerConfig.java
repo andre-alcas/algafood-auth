@@ -2,11 +2,12 @@ package com.algaworks.algafood.auth.core;
 
 import java.util.Arrays;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +24,6 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -42,12 +42,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //	private RedisConnectionFactory redisConnectionFactory;
 	
 	@Autowired
-	private JwtKeyStoreProperties jwtKeyStoreProperties; 
+	private JwtKeyStoreProperties jwtKeyStoreProperties;
+	
+	@Autowired
+	private DataSource dataSource;
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients
-			.inMemory()
+		clients.jdbc(dataSource);
+			/*.inMemory()
 				.withClient("algafood-web")
 				.secret(passwordEncoder.encode("web123"))
 				.authorizedGrantTypes("password","refresh_token")
@@ -77,7 +80,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 					
 				.and()	
 					.withClient("checktoken")//apenas pro resource server fazer a chamada da uri com introspecção
-					.secret(passwordEncoder.encode("check123"));
+					.secret(passwordEncoder.encode("check123"));*/
 	}
 	
 	@Override
